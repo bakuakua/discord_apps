@@ -1,1 +1,12 @@
-
+{
+  "name": "dog",
+  "version": "1.0.0",
+  "description": "My own Discord bot for testing",
+  "main": "bot.js",
+  "author": "Geickko",
+  "dependencies": {
+    "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+    "random-number": "0.0.9",
+    "winston": "^3.2.1"
+  }
+}
