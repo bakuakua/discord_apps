@@ -1,48 +1,12 @@
-var Discord = require('discord.io');
-var logger = require('winston');
-var auth = require('./auth.json');
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
-});
-logger.level = 'debug';
-// Initialize Discord Bot
-var bot = new Discord.Client({
-   token: auth.token,
-   autorun: true
-});
-bot.on('ready', function (evt) {
-    logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
-});
-bot.on('message', function (user, userID, channelID, message, evt) {
-    // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with `!`
-    if (message.substring(0, 1) == '!') {
-        var args = message.substring(1).split(' ');
-        var cmd = args[0];
-       
-        args = args.splice(1);
-
-        switch(cmd) {
-            // !ping
-            case 'roll':
-                var rn = require('random-number');
-                var options = {
-                    min: 0,
-                    max: 100,
-                    integer: true
-                }
-                var n = rn(options).toString();
-                var msg = '**'+user+" rolled "+n+'**';
-                bot.sendMessage({
-                    to: channelID,
-                    message: msg
-                });
-            break;
-            // Just add any case commands if you want to..
-         }
-     }
-});
+const Discord = require('discord.js')
+const bot = new Discord.Client()
+bot.on('ready', () => {
+  console.log(`Logged in as ${bot.user.tag}!`)
+})
+bot.on('message', msg => {
+  if (msg.content.startsWith ('!roll')) {
+    let luckynum = Math.floor(Math.random()*101);
+    msg.reply('**you rolled '+luckynum.toString()+'**');
+  }
+})
+bot.login('NTQ5ODEzMDg4MTk5OTAxMTk0.D1uS5Q.x6c475rx16F0SWrjREIvogxUH-k')
